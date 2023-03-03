@@ -7,15 +7,15 @@ const loaduser = () => {
 }
 loaduser(); */
 
-const loaduser = async() => {
-  try {    
+const loaduser = async () => {
+  try {
     const res = await fetch(`https://openapi.programming-hero.com/api/ai/tools`)
-     const data = await res.json();
-     displayai(data.data.tools.slice(0, 6));
-    }
-     catch(error){
-        console.log(error);
-     }
+    const data = await res.json();
+    displayai(data.data.tools.slice(0, 6));
+  }
+  catch (error) {
+    console.log(error);
+  }
 
 }
 loaduser();
@@ -36,13 +36,13 @@ const displayai = (data) => {
     div.innerHTML = `
 
   <div class="card h-100 p-3">
-                    <img src="${image}" class="card-img-top rounded-2" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title fw-bold p-0">Feature</h5>
-                      <ol type="1" class="card-text p-2">
-                      <li class="text-secondary">${features[0]}</li>
-                      <li class="text-secondary">${features[1]}</li>
-                      <li class="text-secondary">${features[2] ? features[2] : "more skills have"}</li>
+                  <img src="${image}" class="card-img-top rounded-2" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title fw-bold p-0">Feature</h5>
+                    <ol type="1" class="card-text p-2" id="featuresItem">
+                    <li class="text-secondary">${features[0]}</li>
+                    <li class="text-secondary">${features[1]}</li>
+                <li class="text-secondary">${features[2] ? features[2] : "more skills have"}</li>
                       </ol>
                     </div>
                     <hr class="px-2">
@@ -66,7 +66,6 @@ const displayai = (data) => {
 
     `;
     aicontainer.appendChild(div);
-
   });
   tooglespin(false);
 
@@ -125,7 +124,7 @@ const displayaiinfo = (data) => {
                 <p class="fw-bold">${description}</p>
              <div class="flex-md-column flex-xl-row flex-column d-flex justify-content-between align-items-center gap-4 mt-2" id="pricinginner">
              <div class=" bg-body rounded-4  px-2 py-4">
-             <h4 class="text-success text-center" id="pricefirst"></h4>
+             <h4 class="text-success text-center" id="pricefirst">${pricing[0].price} ${pricing[0].plan}</h4>
            </div>
            <div class=" bg-body rounded-4 px-2 py-4">
              <h4 class="text-info  text-center" id="pricesecond"></h4>
@@ -185,7 +184,7 @@ const displayaiinfo = (data) => {
     `;
 
 
-    // accuracy badge 
+  // accuracy badge 
   if (accuracy.score !== null) {
     document.getElementById('score_badge').innerText = `${accuracy.score * 100}  % accuracy`
 
@@ -194,26 +193,27 @@ const displayaiinfo = (data) => {
   }
 
   // end accuricy
- 
-  
+
+
+// pricing 
 
 
 
 
-   //  integration loop
- const litext = document.getElementById('innerset');
+  //  integration loop
+  const litext = document.getElementById('innerset');
 
 
- for(let element of integrations){
-  if( integrations === null){
-    litext.innerHTML = "No data found";
+  for (let element of integrations) {
+    if (integrations === 'null') {
+      litext.innerHTML = "No data found";
+    }
+    else {
+      const li = document.createElement('li');
+      li.innerHTML = `${element}`;
+      litext.appendChild(li);
+    }
   }
-  else{
-    const li = document.createElement('li');
-    li.innerHTML = `${element}`;
-    litext.appendChild(li);
-  } 
- }
 
 
 
