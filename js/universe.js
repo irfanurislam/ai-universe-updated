@@ -1,23 +1,23 @@
 
-const loaduser =() => {
-    const url = `https://openapi.programming-hero.com/api/ai/tools`;
-     fetch(url)
+const loaduser = () => {
+  const url = `https://openapi.programming-hero.com/api/ai/tools`;
+  fetch(url)
     .then(res => res.json())
-    .then(data => displayai(data.data.tools.slice(0,6)))
+    .then(data => displayai(data.data.tools.slice(0, 6)))
 }
 loaduser();
 
-const displayai = (data) =>{
- console.log(data);
-    const aicontainer = document.getElementById('ai_contain');
-   // aicontainer.textContent ='';
-    aicontainer.innerHTML ="";
-  
-    //const sortdata = data.slice(0,20);
-    //console.log(sortdata);
-    data.forEach(card => {
-        console.log(card);
-        const {id,image,name,features,published_in} = card;
+const displayai = (data) => {
+  console.log(data);
+  const aicontainer = document.getElementById('ai_contain');
+  // aicontainer.textContent ='';
+  aicontainer.innerHTML = "";
+
+  //const sortdata = data.slice(0,20);
+  //console.log(sortdata);
+  data.forEach(card => {
+    console.log(card);
+    const { id, image, name, features, published_in } = card;
     const div = document.createElement('div');
     div.classList.add('col');
     div.innerHTML = `
@@ -29,7 +29,7 @@ const displayai = (data) =>{
                       <ol type="1" class="card-text p-2">
                       <li class="text-secondary">${features[0]}</li>
                       <li class="text-secondary">${features[1]}</li>
-                      <li class="text-secondary">${features[2] ? features[2] : "more skills have" }</li>
+                      <li class="text-secondary">${features[2] ? features[2] : "more skills have"}</li>
                       </ol>
                     </div>
                     <hr class="px-2">
@@ -53,10 +53,10 @@ const displayai = (data) =>{
 
     `;
     aicontainer.appendChild(div);
-        
-    });
-    tooglespin(false);
-    
+
+  });
+  tooglespin(false);
+
 }
 
 const showAllDataTogether = () => {
@@ -76,12 +76,12 @@ const showAllDataTogether = () => {
 
 // spinners
 
-const tooglespin = (isloading) =>{
+const tooglespin = (isloading) => {
   const loadersection = document.getElementById('loaderspin');
-  if(isloading){
-      loadersection.classList.remove('d-none');
-  }else{
-      loadersection.classList.add('d-none');
+  if (isloading) {
+    loadersection.classList.remove('d-none');
+  } else {
+    loadersection.classList.add('d-none');
   }
 }
 
@@ -89,8 +89,8 @@ const tooglespin = (isloading) =>{
 
 
 
-const loadaiinfo = (id) =>{
-    fetch(` https://openapi.programming-hero.com/api/ai/tool/${id}`)
+const loadaiinfo = (id) => {
+  fetch(` https://openapi.programming-hero.com/api/ai/tool/${id}`)
     .then(res => res.json())
     .then(data => displayaiinfo(data.data))
 }
@@ -98,19 +98,19 @@ const loadaiinfo = (id) =>{
 
 
 
-const displayaiinfo = (data) =>{
-    console.log(data);
-    const {description,pricing,features,integrations,image_link,input_output_examples,accuracy} = data
-    const infoaicontainer = document.getElementById('aiinfocontainer');
-    infoaicontainer.innerHTML = `
+const displayaiinfo = (data) => {
+  console.log(data);
+  const { description, pricing, features, integrations, image_link, input_output_examples, accuracy } = data;
+  const infoaicontainer = document.getElementById('aiinfocontainer');
+  infoaicontainer.innerHTML = `
     
-    <div class ="row">
-         <div class="col-xl-6 col-md-6 col-sm-12">
+    <div class ="row row-cols-1 row-cols-md-1 row-cols-lg-2 row-cols-sm-1 g-4"">
+         <div class="col">
           <div class="card h-100 p-2 border-danger border rounded-2" style="background-color:#fef7f7;">
           
             <div class="card-body">
                 <p class="fw-bold">${description}</p>
-             <div class="flex-md-column flex-lg-row flex-xl-row flex-column d-flex justify-content-between align-items-center gap-4 mt-2">
+             <div class="flex-md-column flex-xl-row flex-column d-flex justify-content-between align-items-center gap-4 mt-2">
                 <div class=" bg-body rounded-4  px-2 py-4">
                     <h4 class="text-success text-center"> ${pricing[0].price !== 'No cost' ? pricing[0].price : 'Cost of '} ${pricing[0].plan}</h4>
                 </div>
@@ -136,30 +136,38 @@ const displayaiinfo = (data) =>{
                <div>
                 <h3>Integrations
                 </h3>
-                <ul class="text-secondary">
-                    <li>${integrations['0']}</li>
-                    <li>${integrations['1']}</li>
-                    <li>${integrations['2']}</li>
+                <div id= "intregationli">
+                <ul class ="text-secondary id="intgre" ${integrations !== null ? integrations: 'no data found'}>
+                    
+                <li>${integrations[0] }</li>
+                <li>${integrations[1]}</li>
+                <li>${integrations[2]}</li>
+               
+            </ul>
+                </div>
+          
+                
                     
                     
                     
                     
-                </ul>
+                    
+                
                </div>
              </div>
             </div>
            
           </div>
         </div>
-         <div class="col-xl-6 col-md-6 col-sm-12">
+         <div class="col">
           <div class="card h-100 p-2">
           <div class="position-relative">
             <img src="${image_link[0]}" class="rounded-5 p-3 card-img-top" alt="..." >
-            <div class="position-absolute top-0 end-0"><span id='score_badge' class="px-5 badge bg-danger">${accuracy.score}</span></div>
+            <div class="position-absolute top-0 end-0"><span id='score_badge' class="px-5 badge bg-danger"></span></div>
             </div>
             <div class="card-body">
               <h5 class="card-title text-center">${input_output_examples[0].input}</h5>
-              <p class="card-text text-center">${input_output_examples[1].output ? input_output_examples[1].output  :"no no yo take a break!" } </p>
+              <p class="card-text text-center">${input_output_examples[1].output ? input_output_examples[1].output : "No! Not Yet! Take a break!!!"} </p>
             </div>
           </div>
         </div> 
@@ -167,10 +175,18 @@ const displayaiinfo = (data) =>{
     
     `;
 
-    if(accuracy.score === null){
-      document.getElementById('score_badge').classList.add('d-none')
-    }
-    
+  if (accuracy.score !== null) {
+    document.getElementById('score_badge').innerText = `${accuracy.score * 100}  % accuracy`
+
+  } else {
+    document.getElementById('score_badge').classList.add('d-none')
+  }
+
+  
+
+
+
+
 
 }
 
