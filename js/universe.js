@@ -1,17 +1,21 @@
-console.log('hlw');
 
 const loaduser =() => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
      fetch(url)
     .then(res => res.json())
-    .then(data => displayai(data.data.tools))
+    .then(data => displayai(data.data.tools.slice(0,6)))
 }
+loaduser();
 
 const displayai = (data) =>{
+ console.log(data);
     const aicontainer = document.getElementById('ai_contain');
-    const sortdata = data.slice(0,10);
-    console.log(sortdata);
-    sortdata.forEach(card => {
+   // aicontainer.textContent ='';
+    aicontainer.innerHTML ="";
+  
+    //const sortdata = data.slice(0,20);
+    //console.log(sortdata);
+    data.forEach(card => {
         console.log(card);
         const {id,image,name,features,published_in} = card;
     const div = document.createElement('div');
@@ -25,7 +29,7 @@ const displayai = (data) =>{
                       <ol type="1" class="card-text p-2">
                       <li class="text-secondary">${features[0]}</li>
                       <li class="text-secondary">${features[1]}</li>
-                      <li class="text-secondary">${features[2]}</li>
+                      <li class="text-secondary">${features[2] ? features[2] : "more skills have" }</li>
                       </ol>
                     </div>
                     <hr class="px-2">
@@ -51,8 +55,39 @@ const displayai = (data) =>{
     aicontainer.appendChild(div);
         
     });
+    tooglespin(false);
     
 }
+
+const showAllDataTogether = () => {
+  fetch("https://openapi.programming-hero.com/api/ai/tools")
+    .then((res) => res.json())
+    .then((data) => {
+      displayai(data.data.tools)
+      document.getElementById('showdata').classList.add('d-none');
+    });
+};
+
+
+
+
+
+
+
+// spinners
+
+const tooglespin = (isloading) =>{
+  const loadersection = document.getElementById('loaderspin');
+  if(isloading){
+      loadersection.classList.remove('d-none');
+  }else{
+      loadersection.classList.add('d-none');
+  }
+}
+
+
+
+
 
 const loadaiinfo = (id) =>{
     fetch(` https://openapi.programming-hero.com/api/ai/tool/${id}`)
@@ -75,15 +110,15 @@ const displayaiinfo = (data) =>{
           
             <div class="card-body">
                 <p class="fw-bold">${description}</p>
-             <div class="d-flex justify-content-between align-items-center gap-4 mt-2">
-                <div class=" bg-body rounded-4  px-3 py-4">
-                    <h4 class="text-success text-center">${pricing[0].price ? pricing[0].price : 'free of cost'} ${pricing[0].plan}</h4>
+             <div class="flex-md-column flex-lg-row flex-xl-row flex-column d-flex justify-content-between align-items-center gap-4 mt-2">
+                <div class=" bg-body rounded-4  px-2 py-4">
+                    <h4 class="text-success text-center"> ${pricing[0].price !== 'No cost' ? pricing[0].price : 'Cost of '} ${pricing[0].plan}</h4>
                 </div>
-                <div class=" bg-body rounded-4 px-3 py-4">
-                    <h4 class="text-info  text-center">${pricing[1].price ? pricing[1].price : 'free of cost'} ${pricing[1].plan}</h4>
+                <div class=" bg-body rounded-4 px-2 py-4">
+                    <h4 class="text-info  text-center">${pricing[1].price !== 'No cost' ? pricing[1].price : 'Cost of '} ${pricing[1].plan}</h4>
                 </div>
-                <div class=" bg-body rounded-4 px-3 py-4">
-                    <h4 class="text-danger text-center">${pricing[2].price ? pricing[2].price : 'free of cost'} ${pricing[2].plan}</h4>
+                <div class=" bg-body rounded-4 px-2 py-4">
+                    <h4 class="text-danger text-center">${pricing[2].price !== 'No cost' ? pricing[2].price : 'Cost of '} ${pricing[2].plan}</h4>
                 </div>
 
              </div>
@@ -120,7 +155,7 @@ const displayaiinfo = (data) =>{
           <div class="card h-100 p-2">
           <div class="position-relative">
             <img src="${image_link[0]}" class="rounded-5 p-3 card-img-top" alt="..." >
-            <div class="position-absolute top-0 end-0"><span class="px-5 badge bg-danger">${accuracy.score}</span></div>
+            <div class="position-absolute top-0 end-0"><span id='score_badge' class="px-5 badge bg-danger">${accuracy.score}</span></div>
             </div>
             <div class="card-body">
               <h5 class="card-title text-center">${input_output_examples[0].input}</h5>
@@ -131,7 +166,13 @@ const displayaiinfo = (data) =>{
       </div>
     
     `;
+
+    if(accuracy.score === null){
+      document.getElementById('score_badge').classList.add('d-none')
+    }
+    
+
 }
 
 
-loaduser();
+//loaduser();
