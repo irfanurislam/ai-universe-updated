@@ -9,7 +9,7 @@ const loaduser =() => {
 
 const displayai = (data) =>{
     const aicontainer = document.getElementById('ai_contain');
-    const sortdata = data.slice(0,6);
+    const sortdata = data.slice(0,10);
     console.log(sortdata);
     sortdata.forEach(card => {
         console.log(card);
@@ -33,7 +33,10 @@ const displayai = (data) =>{
                      <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h4>${name}</h4>
+                           <div class = "d-flex gap-3 align-items-center mt-2">
+                            <p> <i class="fa fa-calendar"></i></p>
                             <p>${published_in}</p>
+                           </div>
                         </div>
                         <div>
                             <i class="text-danger fas fa-arrow-right" onclick="loadaiinfo('${id}')"  data-bs-toggle="modal" data-bs-target="#aiinfodetails"></i>
@@ -66,21 +69,21 @@ const displayaiinfo = (data) =>{
     const infoaicontainer = document.getElementById('aiinfocontainer');
     infoaicontainer.innerHTML = `
     
-    <div class="row row-cols-1 row-cols-md-2 row-cols-sm-2 g-4">
-         <div class="col">
-          <div class="card h-100 p-2 border-danger border rounded-2" style="background-color:#ffefef;">
+    <div class ="row">
+         <div class="col-xl-6 col-md-6 col-sm-12">
+          <div class="card h-100 p-2 border-danger border rounded-2" style="background-color:#fef7f7;">
           
             <div class="card-body">
                 <p class="fw-bold">${description}</p>
              <div class="d-flex justify-content-between align-items-center gap-4 mt-2">
                 <div class=" bg-body rounded-4  px-3 py-4">
-                    <h4 class="text-success text-center">${pricing[0].price} ${pricing[1].plan}</h4>
+                    <h4 class="text-success text-center">${pricing[0].price ? pricing[0].price : 'free of cost'} ${pricing[0].plan}</h4>
                 </div>
                 <div class=" bg-body rounded-4 px-3 py-4">
-                    <h4 class="text-info  text-center">${pricing[0].price} ${pricing[1].plan}</h4>
+                    <h4 class="text-info  text-center">${pricing[1].price ? pricing[1].price : 'free of cost'} ${pricing[1].plan}</h4>
                 </div>
                 <div class=" bg-body rounded-4 px-3 py-4">
-                    <h4 class="text-danger text-center">${pricing[0].price} ${pricing[1].plan}</h4>
+                    <h4 class="text-danger text-center">${pricing[2].price ? pricing[2].price : 'free of cost'} ${pricing[2].plan}</h4>
                 </div>
 
              </div>
@@ -89,9 +92,9 @@ const displayaiinfo = (data) =>{
                <div>
                 <h3>features</h3>
                 <ul class="text-secondary">
-                    <li>${features}</li>
-                    <li>${features}</li>
-                    <li>${features}</li>
+                    <li>${features['1'].feature_name}</li>
+                    <li>${features['2'].feature_name}</li>
+                    <li>${features['3'].feature_name}</li>
                     
                 </ul>
                </div>
@@ -99,7 +102,9 @@ const displayaiinfo = (data) =>{
                 <h3>Integrations
                 </h3>
                 <ul class="text-secondary">
-                    <li>${integrations}</li>
+                    <li>${integrations['0']}</li>
+                    <li>${integrations['1']}</li>
+                    <li>${integrations['2']}</li>
                     
                     
                     
@@ -111,7 +116,7 @@ const displayaiinfo = (data) =>{
            
           </div>
         </div>
-         <div class="col">
+         <div class="col-xl-6 col-md-6 col-sm-12">
           <div class="card h-100 p-2">
           <div class="position-relative">
             <img src="${image_link[0]}" class="rounded-5 p-3 card-img-top" alt="..." >
@@ -119,7 +124,7 @@ const displayaiinfo = (data) =>{
             </div>
             <div class="card-body">
               <h5 class="card-title text-center">${input_output_examples[0].input}</h5>
-              <p class="card-text text-center">${input_output_examples[1].output ? input_output_examples[1].output : "no no yo take a break!" } </p>
+              <p class="card-text text-center">${input_output_examples[1].output ? input_output_examples[1].output  :"no no yo take a break!" } </p>
             </div>
           </div>
         </div> 
