@@ -1,9 +1,22 @@
-
+/* 
 const loaduser = () => {
   const url = `https://openapi.programming-hero.com/api/ai/tools`;
   fetch(url)
     .then(res => res.json())
     .then(data => displayai(data.data.tools.slice(0, 6)))
+}
+loaduser(); */
+
+const loaduser = async() => {
+  try {    
+    const res = await fetch(`https://openapi.programming-hero.com/api/ai/tools`)
+     const data = await res.json();
+     displayai(data.data.tools.slice(0, 6));
+    }
+     catch(error){
+        console.log(error);
+     }
+
 }
 loaduser();
 
@@ -110,26 +123,27 @@ const displayaiinfo = (data) => {
           
             <div class="card-body">
                 <p class="fw-bold">${description}</p>
-             <div class="flex-md-column flex-xl-row flex-column d-flex justify-content-between align-items-center gap-4 mt-2">
-                <div class=" bg-body rounded-4  px-2 py-4">
-                    <h4 class="text-success text-center"> ${pricing[0].price !== 'No cost' ? pricing[0].price : 'Cost of '} ${pricing[0].plan}</h4>
-                </div>
-                <div class=" bg-body rounded-4 px-2 py-4">
-                    <h4 class="text-info  text-center">${pricing[1].price !== 'No cost' ? pricing[1].price : 'Cost of '} ${pricing[1].plan}</h4>
-                </div>
-                <div class=" bg-body rounded-4 px-2 py-4">
-                    <h4 class="text-danger text-center">${pricing[2].price !== 'No cost' ? pricing[2].price : 'Cost of '} ${pricing[2].plan}</h4>
-                </div>
+             <div class="flex-md-column flex-xl-row flex-column d-flex justify-content-between align-items-center gap-4 mt-2" id="pricinginner">
+             <div class=" bg-body rounded-4  px-2 py-4">
+             <h4 class="text-success text-center" id="pricefirst"></h4>
+           </div>
+           <div class=" bg-body rounded-4 px-2 py-4">
+             <h4 class="text-info  text-center" id="pricesecond"></h4>
+           </div>
+           <div class=" bg-body rounded-4 px-2 py-4">
+             <h4 class="text-danger text-center" id="pricethird"></h4>
+           </div>
+           
 
              </div>
            
              <div class="d-flex justify-content-between mt-5">
                <div>
                 <h3>features</h3>
-                <ul class="text-secondary">
-                    <li>${features['1'].feature_name}</li>
-                    <li>${features['2'].feature_name}</li>
-                    <li>${features['3'].feature_name}</li>
+                <ul class="text-secondary" id="feature">
+                <li>${features['1'].feature_name}</li>
+                <li>${features['2'].feature_name}</li>
+                <li>${features['3'].feature_name}</li>
                     
                 </ul>
                </div>
@@ -137,20 +151,15 @@ const displayaiinfo = (data) => {
                 <h3>Integrations
                 </h3>
                 <div id= "intregationli">
-                <ul class ="text-secondary id="intgre" ${integrations !== null ? integrations: 'no data found'}>
-                    
-                <li>${integrations[0] }</li>
-                <li>${integrations[1]}</li>
-                <li>${integrations[2]}</li>
+                <ul class ="text-secondary" id="innerset">
+                
+                
                
             </ul>
                 </div>
-          
-                
+                             
                     
-                    
-                    
-                    
+                   
                     
                 
                </div>
@@ -175,6 +184,8 @@ const displayaiinfo = (data) => {
     
     `;
 
+
+    // accuracy badge 
   if (accuracy.score !== null) {
     document.getElementById('score_badge').innerText = `${accuracy.score * 100}  % accuracy`
 
@@ -182,7 +193,27 @@ const displayaiinfo = (data) => {
     document.getElementById('score_badge').classList.add('d-none')
   }
 
+  // end accuricy
+ 
   
+
+
+
+
+   //  integration loop
+ const litext = document.getElementById('innerset');
+
+
+ for(let element of integrations){
+  if( integrations === null){
+    litext.innerHTML = "No data found";
+  }
+  else{
+    const li = document.createElement('li');
+    li.innerHTML = `${element}`;
+    litext.appendChild(li);
+  } 
+ }
 
 
 

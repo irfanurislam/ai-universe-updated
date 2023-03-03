@@ -30,3 +30,53 @@ const integrations = [ "Facebook Messenger","Slack", "Telegram"];
                      <li>${integrations[2]}</li>
                     
                  </ul> */
+
+               /*   <li>${integrations[0] }</li>
+                <li>${integrations[1]}</li>
+                <li>${integrations[2]}</li> */
+
+
+            
+
+
+  /*              //  // feaature value set 
+const featuretext = document.getElementById('feature')
+
+//const keys = Object.keys(features);
+//console.log(keys);
+for(let key in features){
+  console.log(features[key]);
+  const count = features[key];
+  //console.log(key);
+  for(let keys in count[0] ){
+    console.log(count[keys]);
+
+    featuretext.innerHTML += `<li>${count[keys]} </li>`;
+
+  }
+ 
+
+}
+
+
+
+// ending */
+
+
+// pricing 
+ /*  const pricefirst = document.getElementById('pricefirst');
+  const pricesecond = document.getElementById('pricesecond');
+  const pricethird = document.getElementById('pricethird');
+  if(pricing.plan === '0' || pricing.price === 'No cost'){
+   pricefirst.innerHTML = 'free of cost';
+   pricesecond.innerHTML = 'free of cost';
+   pricethird.innerHTML = 'free of cost';
+
+  } 
+  else{
+    pricefirst.innerHTML = `${pricing[0].price} ${pricing[0].plan}`;
+   pricesecond.innerHTML = `${pricing[1].price} ${pricing[1].plan}`;
+   pricethird.innerHTML = `${pricing[2].price}  ${pricing[2].plan}`;
+  } */
+
+  // ending price

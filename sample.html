@@ -189,8 +189,78 @@
 
 
 
+<section>
+  <div class ="row row-cols-1 row-cols-md-1 row-cols-lg-2 row-cols-sm-1 g-4"">
+    <div class="col">
+     <div class="card h-100 p-2 border-danger border rounded-2" style="background-color:#fef7f7;">
+     
+       <div class="card-body">
+           <p class="fw-bold">${description}</p>
+        <div class="flex-md-column flex-xl-row flex-column d-flex justify-content-between align-items-center gap-4 mt-2">
+           <div class=" bg-body rounded-4  px-2 py-4">
+               <h4 class="text-success text-center"> ${pricing[0].price !== 'No cost' ? pricing[0].price : 'Cost of '} ${pricing[0].plan}</h4>
+           </div>
+           <div class=" bg-body rounded-4 px-2 py-4">
+               <h4 class="text-info  text-center">${pricing[1].price !== 'No cost' ? pricing[1].price : 'Cost of '} ${pricing[1].plan}</h4>
+           </div>
+           <div class=" bg-body rounded-4 px-2 py-4">
+               <h4 class="text-danger text-center">${pricing[2].price !== 'No cost' ? pricing[2].price : 'Cost of '} ${pricing[2].plan}</h4>
+           </div>
 
+        </div>
+      
+        <div class="d-flex justify-content-between mt-5">
+          <div>
+           <h3>features</h3>
+           <ul class="text-secondary">
+               <li>${features['1'].feature_name}</li>
+               <li>${features['2'].feature_name}</li>
+               <li>${features['3'].feature_name}</li>
+               
+           </ul>
+          </div>
+          <div>
+           <h3>Integrations
+           </h3>
+           <div id= "intregationli">
+           <ul class ="text-secondary" id="intgre">
+           <li>${integrations[0] }</li>
+           <li>${integrations[1]}</li>
+           <li>${integrations[2]}</li>
 
+          
+             </ul>
+           </div>     
+          </div>
+        </div>
+       </div>
+      
+     </div>
+   </div>
+    <div class="col">
+     <div class="card h-100 p-2">
+     <div class="position-relative">
+       <img src="${image_link[0]}" class="rounded-5 p-3 card-img-top" alt="..." >
+       <div class="position-absolute top-0 end-0"><span id='score_badge' class="px-5 badge bg-danger"></span></div>
+       </div>
+       <div class="card-body">
+         <h5 class="card-title text-center">${input_output_examples[0].input}</h5>
+         <p class="card-text text-center">${input_output_examples[1].output ? input_output_examples[1].output : "No! Not Yet! Take a break!!!"} </p>
+       </div>
+     </div>
+   </div> 
+ </div>
+
+</section>
+<div class=" bg-body rounded-4  px-2 py-4">
+  <h4 class="text-success text-center" id="pricefirst"></h4>
+</div>
+<div class=" bg-body rounded-4 px-2 py-4">
+  <h4 class="text-info  text-center" id="pricesecond">${pricing[1].price !== 'No cost' ? pricing[1].price : 'Cost of '} ${pricing[1].plan}</h4>
+</div>
+<div class=" bg-body rounded-4 px-2 py-4">
+  <h4 class="text-danger text-center" id="pricethird">${pricing[2].price !== 'No cost' ? pricing[2].price : 'Cost of '} ${pricing[2].plan}</h4>
+</div>
 
 
 
