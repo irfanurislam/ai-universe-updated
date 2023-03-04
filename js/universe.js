@@ -186,7 +186,7 @@ const displayaiinfo = (data) => {
             <div class="position-absolute top-0 end-0"><span id='score_badge' class="px-5 badge bg-danger"></span></div>
             </div>
             <div class="card-body">
-              <h5 class ="card-title text-center">${input_output_examples ? input_output_examples[0]?.input : 'No data found'}</h5>
+              <h4 class ="card-title text-center">${input_output_examples ? input_output_examples[0]?.input : "Can you give any example?"}</h4>
               <p class ="card-text text-center">${input_output_examples ? input_output_examples[1].output : "No! Not Yet! Take a break!!!"} </p>
             </div>
           </div>
@@ -235,7 +235,11 @@ const priceThird = document.getElementById('priceThird');
 
 }
 else{
-  priceFirst.innerHTML = "free of cost";
+  priceFirst.innerHTML ="free of cost / Basic";
+  priceSecond.innerHTML = "free of cost/ pro";
+  priceThird.innerHTML = "free of cost / Enterprise";
+
+
 } 
 
 // ending pricing
