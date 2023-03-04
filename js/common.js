@@ -94,4 +94,23 @@ for(let key in features){
   }
  
 
+//   var dates = ["03/03/2014", "01/03/2014", "02/03/2014", "04/03/2014"];
+
+published_in.sort(function (a, b) {
+    let dateA = new Date(a),
+      dateB = new Date(b);
+    if (dateB < dateA) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+  
+
+
+
+
+
  
+
+  ${pricing.length === 0 ? 'no data found' : pricing[1].price + pricing[1].plan  }

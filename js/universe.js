@@ -1,16 +1,11 @@
-/* 
-const loaduser = () => {
-  const url = `https://openapi.programming-hero.com/api/ai/tools`;
-  fetch(url)
-    .then(res => res.json())
-    .then(data => displayai(data.data.tools.slice(0, 6)))
-}
-loaduser(); */
 
 const loaduser = async () => {
   try {
     const res = await fetch(`https://openapi.programming-hero.com/api/ai/tools`)
     const data = await res.json();
+    console.log(data.data.tools);
+   const sorted = data.data.tools;
+   sorted.sort((a,b) => new Date(a.published_in) - new Date(b.published_in));
     displayai(data.data.tools.slice(0, 6));
   }
   catch (error) {
@@ -23,13 +18,13 @@ loaduser();
 const displayai = (data) => {
   console.log(data);
   const aicontainer = document.getElementById('ai_contain');
-  // aicontainer.textContent ='';
   aicontainer.innerHTML = "";
 
-  //const sortdata = data.slice(0,20);
-  //console.log(sortdata);
+  
+  //array loop single card value get
   data.forEach(card => {
     console.log(card);
+  
     const { id, image, name, features, published_in } = card;
     const div = document.createElement('div');
     div.classList.add('col');
@@ -75,6 +70,8 @@ const showAllDataTogether = () => {
   fetch("https://openapi.programming-hero.com/api/ai/tools")
     .then((res) => res.json())
     .then((data) => {
+      const sorted = data.data.tools;
+      sorted.sort((a,b) => new Date(a.published_in) - new Date(b.published_in));
       displayai(data.data.tools)
       document.getElementById('showdata').classList.add('d-none');
     });
@@ -124,10 +121,10 @@ const displayaiinfo = (data) => {
                 <p class="fw-bold">${description}</p>
              <div class="flex-md-column flex-xl-row flex-column d-flex justify-content-between align-items-center gap-4 mt-2" id="pricinginner">
              <div class=" bg-body rounded-4  px-2 py-4">
-             <h4 class="text-success text-center" id="pricefirst">${pricing[0].price} ${pricing[0].plan}</h4>
+             <h4 class="text-success text-center" id ="priceFirst"></h4>
            </div>
            <div class=" bg-body rounded-4 px-2 py-4">
-             <h4 class="text-info  text-center" id="pricesecond"></h4>
+             <h4 class="text-info  text-center" id="priceSecond"></h4>
            </div>
            <div class=" bg-body rounded-4 px-2 py-4">
              <h4 class="text-danger text-center" id="pricethird"></h4>
@@ -140,9 +137,7 @@ const displayaiinfo = (data) => {
                <div>
                 <h3>features</h3>
                 <ul class="text-secondary" id="feature">
-                <li>${features['1'].feature_name}</li>
-                <li>${features['2'].feature_name}</li>
-                <li>${features['3'].feature_name}</li>
+                
                     
                 </ul>
                </div>
@@ -195,21 +190,53 @@ const displayaiinfo = (data) => {
   // end accuricy
 
 
-// pricing 
 
+// feature set property
+const featurlist = document.getElementById('feature'); 
+if(features){
+ for(let keys in features){
+  //console.log(features[keys].feature_name);
+  featurlist.innerHTML += `<li>${features[keys].feature_name}</li>`;
+  }
+}
+else{
+  features.innerHTML = 'data not found';
+}
+// ending feature 
+
+
+// pricing stproperties
+const priceFirst = document.getElementById('priceFirst');
+const priceSecond = document.getElementById('priceSecond');
+const priceThird = document.getElementById('priceThird');
+//priceFirst.innerHTML = `${pricing[0].price}`
+ if(pricing.length !== 0){
+  priceFirst.innerHTML = `${pricing[0].price !== '0' && pricing[0].price !== 'No cost' ? pricing[0].price : 'Free of cost'} ${pricing[0].plan}`;
+  priceSecond.innerHTML = `${pricing[1].price !== '0' && pricing[1].price !== 'No cost' ? pricing[1].price : 'Free of cost'} ${pricing[1].plan}`;
+  priceThird.innerHTML = `${pricing[2].price !== '0' && pricing[2].price !== 'No cost' ? pricing[2].price : 'Free of cost'} ${pricing[2].plan}`;
+  
+
+}
+else{
+  priceFirst.innerHTML = "free of cost";
+} 
+
+// ending pricing
 
 
 
   //  integration loop
   const litext = document.getElementById('innerset');
-
+const li = document.createElement('li');
 
   for (let element of integrations) {
-    if (integrations === 'null') {
-      litext.innerHTML = "No data found";
+    if (integrations.length === 0){
+       li.innerHTML = "No data found";
+      
     }
     else {
-      const li = document.createElement('li');
+     
+      
       li.innerHTML = `${element}`;
       litext.appendChild(li);
     }
@@ -220,6 +247,12 @@ const displayaiinfo = (data) => {
 
 
 }
-
+customSort = (a,b) => {
+  const dateA = Date.parse(a.published_in);
+  const dateB = Date.parse(b.published_in);
+  if(dateA > dateB) return 1;
+  else if(dateA < dateB ) return -1;
+  return 0;
+  }
 
 //loaduser();
