@@ -4,8 +4,6 @@ const loaduser = async () => {
     const res = await fetch(`https://openapi.programming-hero.com/api/ai/tools`)
     const data = await res.json();
     console.log(data.data.tools);
-   const sorted = data.data.tools;
-   sorted.sort((a,b) => new Date(a.published_in) - new Date(b.published_in));
     displayai(data.data.tools.slice(0, 6));
   }
   catch (error) {
@@ -13,7 +11,25 @@ const loaduser = async () => {
   }
 
 }
+
+
+const loadUserSort = async () => {
+  try {
+    const res = await fetch(`https://openapi.programming-hero.com/api/ai/tools`)
+    const data = await res.json();
+    console.log(data.data.tools);
+   const sorted = data.data.tools;
+   sorted.sort((a,b) => new Date(a.published_in) - new Date(b.published_in));
+    displayai(data.data.tools);
+  }
+  catch (error) {
+    console.log(error);
+  }
+
+}
+
 loaduser();
+
 
 const displayai = (data) => {
   console.log(data);
@@ -70,8 +86,8 @@ const showAllDataTogether = () => {
   fetch("https://openapi.programming-hero.com/api/ai/tools")
     .then((res) => res.json())
     .then((data) => {
-      const sorted = data.data.tools;
-      sorted.sort((a,b) => new Date(a.published_in) - new Date(b.published_in));
+      /* const sorted = data.data.tools;
+      sorted.sort((a,b) => new Date(a.published_in) - new Date(b.published_in)); */
       displayai(data.data.tools)
       document.getElementById('showdata').classList.add('d-none');
     });
@@ -108,8 +124,9 @@ const loadaiinfo = (id) => {
 
 
 const displayaiinfo = (data) => {
+  //console.log(data?.input_output_examples[0].input);
   console.log(data);
-  const { description, pricing, features, integrations, image_link, input_output_examples, accuracy } = data;
+  const { description, pricing, features, integrations, input_output_examples,image_link, accuracy } = data;
   const infoaicontainer = document.getElementById('aiinfocontainer');
   infoaicontainer.innerHTML = `
     
@@ -127,7 +144,7 @@ const displayaiinfo = (data) => {
              <h4 class="text-info  text-center" id="priceSecond"></h4>
            </div>
            <div class=" bg-body rounded-4 px-2 py-4">
-             <h4 class="text-danger text-center" id="pricethird"></h4>
+             <h4 class="text-danger text-center" id="priceThird"></h4>
            </div>
            
 
@@ -169,8 +186,8 @@ const displayaiinfo = (data) => {
             <div class="position-absolute top-0 end-0"><span id='score_badge' class="px-5 badge bg-danger"></span></div>
             </div>
             <div class="card-body">
-              <h5 class="card-title text-center">${input_output_examples[0].input}</h5>
-              <p class="card-text text-center">${input_output_examples[1].output ? input_output_examples[1].output : "No! Not Yet! Take a break!!!"} </p>
+              <h5 class ="card-title text-center">${input_output_examples ? input_output_examples[0]?.input : 'No data found'}</h5>
+              <p class ="card-text text-center">${input_output_examples ? input_output_examples[1].output : "No! Not Yet! Take a break!!!"} </p>
             </div>
           </div>
         </div> 
@@ -210,10 +227,10 @@ const priceFirst = document.getElementById('priceFirst');
 const priceSecond = document.getElementById('priceSecond');
 const priceThird = document.getElementById('priceThird');
 //priceFirst.innerHTML = `${pricing[0].price}`
- if(pricing.length !== 0){
+ if(pricing){
   priceFirst.innerHTML = `${pricing[0].price !== '0' && pricing[0].price !== 'No cost' ? pricing[0].price : 'Free of cost'} ${pricing[0].plan}`;
   priceSecond.innerHTML = `${pricing[1].price !== '0' && pricing[1].price !== 'No cost' ? pricing[1].price : 'Free of cost'} ${pricing[1].plan}`;
-  priceThird.innerHTML = `${pricing[2].price !== '0' && pricing[2].price !== 'No cost' ? pricing[2].price : 'Free of cost'} ${pricing[2].plan}`;
+  priceThird.innerHTML = `${pricing[0].price !== '0' && pricing[0].price !== 'No cost' ? pricing[2].price : 'Free of cost'} ${pricing[2].plan}`;
   
 
 }
@@ -226,21 +243,29 @@ else{
 
 
   //  integration loop
-  const litext = document.getElementById('innerset');
-const li = document.createElement('li');
+  const liText = document.getElementById('innerset');
 
-  for (let element of integrations) {
-    if (integrations.length === 0){
-       li.innerHTML = "No data found";
+
+  
+    if (integrations){
+       
+      for (let element of integrations) {
+
+       const li = document.createElement('li');
+       li.innerHTML = `${element}`;
+       liText.appendChild(li);
+
+      }
+
+       
       
     }
     else {
-     
       
-      li.innerHTML = `${element}`;
-      litext.appendChild(li);
+      liText.innerHTML = "No data found";
+     
     }
-  }
+  
 
 
 
